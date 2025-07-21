@@ -1,4 +1,5 @@
 from sensors.tire_sensor import TireSensor
+from tpms.monitor import TPMSMonitor
 
 sensors = [
     TireSensor("front_left"),
@@ -7,6 +8,9 @@ sensors = [
     TireSensor("rear_right")
 ]
 
-for sensor in sensors:
-    data = sensor.read_all()
-    print(data)
+monitor = TPMSMonitor(sensors)
+
+alerts = monitor.check_sensors()
+
+for alert in alerts:
+    print(alert)
