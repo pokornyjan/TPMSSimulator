@@ -49,9 +49,10 @@ def plot_all_tires(log_data):
         ax.grid(True)
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-    plt.show()
+    plt.savefig("tpms_graphs/tire_data_overview.png")
 
 if __name__ == "__main__":
     log_data = load_log()
     if log_data:
+        os.makedirs("tpms_graphs", exist_ok=True)
         plot_all_tires(log_data)
