@@ -1,3 +1,6 @@
+import time
+
+from logs.logger import TPMSLogger
 from sensors.tire_sensor import TireSensor
 from tpms.monitor import TPMSMonitor
 
@@ -9,8 +12,13 @@ sensors = [
 ]
 
 monitor = TPMSMonitor(sensors)
+logger = TPMSLogger()
 
-alerts = monitor.check_sensors()
+for _ in range(20):
+    alerts = monitor.check_sensors()
 
-for alert in alerts:
-    print(alert)
+    for alert in alerts:
+        print(alert)
+
+    logger.log(alerts)
+    time.sleep(1)
