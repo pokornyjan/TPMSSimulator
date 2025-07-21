@@ -30,3 +30,9 @@ jobs:
 
       - name: Run visualization (no GUI needed)
         run: python visualizations/plot_logs.py
+            
+      - name: Upload TPMS Graph
+        uses: actions/upload-artifact@v4
+        with:
+          name: TPMS_Graphs
+          path: tpms_graphs/tire_data_overview.png
