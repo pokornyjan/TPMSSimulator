@@ -31,3 +31,14 @@
 .status.alert {
   color: red;
 }
+
+.tire-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 12px;
+  width: 200px;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
