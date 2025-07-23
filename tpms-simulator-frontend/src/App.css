@@ -90,10 +90,15 @@ button:hover {
   background-color: #2980b9;
 }
 
-/* Status Indicator styling, if you want it */
 .status-indicator {
   margin-top: 2rem;
   text-align: center;
   font-weight: 600;
   color: #27ae60;
+}
+
+.graph-section {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
 }

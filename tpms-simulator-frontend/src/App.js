@@ -20,25 +20,30 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div className="App">
-      <h1>TPMS Simulator</h1>
-      {data ? (
-        <>
-          <div className="tire-grid">
-            <TireDisplay position="Front Left" {...data.frontLeft} />
-            <TireDisplay position="Front Right" {...data.frontRight} />
-            <TireDisplay position="Rear Left" {...data.rearLeft} />
-            <TireDisplay position="Rear Right" {...data.rearRight} />
-            <TPMSGraph data={data} />
-          </div>
-          <StatusIndicator data={data} />
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  );
+return (
+  <div className="App">
+    <h1>TPMS Simulator</h1>
+    {data ? (
+      <>
+        <div className="tire-grid">
+            <TireDisplay position="frontLeft" {...data.frontLeft} />
+            <TireDisplay position="frontRight" {...data.frontRight} />
+            <TireDisplay position="rearLeft" {...data.rearLeft} />
+            <TireDisplay position="rearRight" {...data.rearRight} />
+        </div>
+
+        <div className="graph-section">
+          <h2>Pressure & Temperature Graph</h2>
+          <TPMSGraph data={data} />
+        </div>
+
+        <StatusIndicator data={data} />
+      </>
+    ) : (
+      <p>Loading...</p>
+    )}
+  </div>
+);
 }
 
 export default App;

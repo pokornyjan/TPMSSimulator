@@ -3,20 +3,17 @@ import { useState } from "react";
 function TireDisplay({ position, pressure, temperature }) {
   const [leaking, setLeaking] = useState(false);
   const [leakRate, setLeakRate] = useState(0.1);
-  const [pendingLeakRate, setPendingLeakRate] = useState(0.1); // separate input value
+  const [pendingLeakRate, setPendingLeakRate] = useState(0.1);
 
   const updateLeakStatus = async (newLeaking = leaking, newRate = leakRate) => {
     await fetch("http://localhost:4000/set-leakage", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-      position: position
-                .replace(" ", "") // remove space
-                .replace("F", "f")
-                .replace("R", "r"), // preserve camelCase
+        position: position,
         leaking: newLeaking,
         leak_rate: newRate,
-      }),
+}),
     });
   };
 
