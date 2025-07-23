@@ -42,3 +42,19 @@
   text-align: center;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
+
+.tire-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tire-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #f9f9f9;
+  text-align: left;
+}

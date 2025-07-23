@@ -36,22 +36,16 @@ def set_fluctuation(payload: FluctuationPayload):
         sensor.set_fluctuation_intensity(payload.intensity)
     return {"status": "ok", "intensity": payload.intensity}
 
-
-class LeakagePayload(BaseModel):
+class LeakSettings(BaseModel):
     position: str
     leaking: bool
-    leak_rate: float = 0.1
-
-class LeakRequest(BaseModel):
-    position: str
-    leaking: bool
-    leak_rate: float = 0.1
+    leak_rate: float
 
 @app.post("/set-leakage")
-def set_leakage(data: LeakRequest):
-    position = data.position
-    if position not in sensors:
-        raise HTTPException(status_code=400, detail="Invalid tire position")
-
-    sensors[position].set_leaking(data.leaking, data.leak_rate)
-    return {"message": f"Leak state updated for {position}"}
+async def set_leakage(settings: LeakSettings):
+    sensor = sensors.get(settings.position)
+    if sensor:
+        sensor.leaking = settings.leaking
+        sensor.leak_rate = settings.leak_rate
+        return {"status": "success"}
+    return {"status": "error", "message": "Invalid sensor position"}
