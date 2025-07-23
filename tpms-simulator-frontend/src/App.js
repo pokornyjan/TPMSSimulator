@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import StatusIndicator from "./components/StatusIndicator";
 import TireDisplay from "./components/TireDisplay";
+import TPMSGraph from "./components/TPMSGraph";
 
 function App() {
   const [data, setData] = useState(null);
@@ -29,6 +30,7 @@ function App() {
             <TireDisplay position="Front Right" {...data.frontRight} />
             <TireDisplay position="Rear Left" {...data.rearLeft} />
             <TireDisplay position="Rear Right" {...data.rearRight} />
+            <TPMSGraph data={data} />
           </div>
           <StatusIndicator data={data} />
         </>
