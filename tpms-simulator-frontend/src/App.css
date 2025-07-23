@@ -58,3 +58,42 @@
   background: #f9f9f9;
   text-align: left;
 }
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+input[type="number"] {
+  width: 70px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-left: 8px;
+}
+
+button {
+  margin-left: 12px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Status Indicator styling, if you want it */
+.status-indicator {
+  margin-top: 2rem;
+  text-align: center;
+  font-weight: 600;
+  color: #27ae60;
+}

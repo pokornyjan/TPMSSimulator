@@ -37,12 +37,29 @@ function TireDisplay({ position, pressure, temperature }) {
     }
   };
 
+   const handlePump = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/pump", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ position }),
+      });
+      const data = await res.json();
+      console.log("Pump result:", data);
+      // optionally, force refresh or update pressure state if you have local pressure state
+    } catch (err) {
+      console.error("Pump error:", err);
+    }
+  };
+
   return (
     <div className="tire-card">
       <h3>{position}</h3>
       <p>Pressure: {pressure} PSI</p>
       <p>Temperature: {temperature} °C</p>
-
+      <button onClick={handlePump} style={{ marginTop: "1rem" }}>
+        Pump Pressure +1 PSI
+      </button>
       <label>
         <input type="checkbox" checked={leaking} onChange={handleLeakToggle} />
         Leak Enabled

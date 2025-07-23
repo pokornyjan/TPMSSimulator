@@ -49,3 +49,16 @@ async def set_leakage(settings: LeakSettings):
         sensor.leak_rate = settings.leak_rate
         return {"status": "success"}
     return {"status": "error", "message": "Invalid sensor position"}
+
+class PumpPayload(BaseModel):
+    position: str
+    amount: float = 1.0  # default pump amount in PSI
+
+@app.post("/pump")
+async def pump_tire(payload: PumpPayload):
+    sensor = sensors.get(payload.position)
+    if sensor:
+        sensor.pump(payload.amount)
+        return {"status": "success", "new_pressure": round(sensor.pressure, 2)}
+    return {"status": "error", "message": "Invalid sensor position"}
+

@@ -1,5 +1,6 @@
 import random
 
+
 class TirePressureSensor:
     def __init__(self, position, pressure=32.0, temperature=25.0, leaking=False, leak_rate=0.1):
         self.position = position
@@ -34,3 +35,7 @@ class TirePressureSensor:
             "pressure": round(self.pressure, 2),
             "temperature": round(self.temperature, 2)
         }
+    
+    def pump(self, amount: float = 1.0):
+        max_pressure = 50.0
+        self.pressure = min(self.pressure + amount, max_pressure)
