@@ -1,24 +1,51 @@
-import time
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
-from logs.logger import TPMSLogger
-from sensors.tire_sensor import TireSensor
-from tpms.monitor import TPMSMonitor
+from sensors.tire_sensor import TirePressureSensor
 
-sensors = [
-    TireSensor("front_left"),
-    TireSensor("front_right"),
-    TireSensor("rear_left"),
-    TireSensor("rear_right")
-]
+app = FastAPI()
 
-monitor = TPMSMonitor(sensors)
-logger = TPMSLogger()
+# Enable CORS for frontend on port 3000
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-for _ in range(20):
-    alerts = monitor.check_sensors()
+# Initialize sensors
+sensors = {
+    "frontLeft": TirePressureSensor("frontLeft"),
+    "frontRight": TirePressureSensor("frontRight"),
+    "rearLeft": TirePressureSensor("rearLeft"),
+    "rearRight": TirePressureSensor("rearRight")
+}
 
-    for alert in alerts:
-        print(alert)
+@app.get("/tpms-data")
+def get_tpms_data():
+    return {pos: sensor.read() for pos, sensor in sensors.items()}
 
-    logger.log(alerts)
-    time.sleep(1)
+
+class FluctuationPayload(BaseModel):
+    intensity: float
+
+@app.post("/set-fluctuation")
+def set_fluctuation(payload: FluctuationPayload):
+    for sensor in sensors.values():
+        sensor.set_fluctuation_intensity(payload.intensity)
+    return {"status": "ok", "intensity": payload.intensity}
+
+
+class LeakagePayload(BaseModel):
+    position: str
+    leaking: bool
+    leak_rate: float = 0.1
+
+@app.post("/set-leakage")
+def set_leakage(payload: LeakagePayload):
+    sensor = sensors.get(payload.position)
+    if sensor:
+        sensor.set_leaking(payload.leaking, payload.leak_rate)
+        return {"status": "ok", "sensor": payload.position, "leaking": payload.leaking}
+    return {"status": "error", "message": "Invalid sensor position"}

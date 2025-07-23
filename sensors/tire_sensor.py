@@ -1,6 +1,6 @@
 import random
 
-class TireSensor:
+class TirePressureSensor:
     def __init__(self, position, pressure=32.0, temperature=25.0, leaking=False, leak_rate=0.1):
         self.position = position
         self.pressure = pressure
